@@ -1,0 +1,29 @@
+server:
+  port: 8011
+spring:
+  application:
+    name: springcloud-eureka-zull-a11
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+
+#配置路由策略
+zuul:
+  routes:
+    url-a:
+      path: /user/**
+      serviceId: springcloud-feign-hystrix-e
+      stripPrefix: false #如果不为false 访问地址需要加serviceId作为前缀，很蛋疼
+    url-b:
+      path: /order/**
+      serviceId: springcloud-eureka-order-a12
+      stripPrefix: false #如果不为false 访问地址需要加serviceId作为前缀，很蛋疼
+    url-c:
+      path: /baidu/**
+      url: http://www.baidu.com
+      # stripPrefix: false # 当时ulr时 stripPrefix一定要维持默认值(true)。当url是http或者https开头,
+                           # 最终访问的地址是url/**,反之作为serviceId

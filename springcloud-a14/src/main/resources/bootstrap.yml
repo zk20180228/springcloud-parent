@@ -1,0 +1,43 @@
+#这个文件的命名必须是bootstrap.yml或者是bootstrap.properties,否者无法注入值，报异常
+spring:
+  cloud:
+    config:
+      discovery:
+        enabled: true #开启从注册中心获取配置服务
+        service-id: springcloud-config-server # 指定配置服务在注册中心的applicationName
+      label: master  # 分支
+      # uri: http://localhost:8014 #指定配置中心的地址---->采用调用注册中心版，就没必要要了
+      name: springcloud-config-client-a14 #配置文件名,默认applicationName
+      #    dev开发环境配置文件
+      #    test测试环境
+      #    pro正式环境
+      profile: dev # 默认 则访问的是不加后缀的xx.yml 或者 xx.properties
+    bus:
+      enabled: true
+      trace:
+        enabled: true
+
+  application:
+    name: springcloud-config-client
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+
+
+server:
+  port: 8014
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh #暴露刷新配置的接口，不同版本，路径可能不一样。springboot2.x才有此配置。1.x没有该配置

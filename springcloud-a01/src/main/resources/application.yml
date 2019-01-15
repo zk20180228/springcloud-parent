@@ -1,0 +1,28 @@
+server:
+  port: 8001
+
+eureka:
+  instance:
+    hostname: localhost # 主机名: locahost
+    #prefer-ip-address: true # 是否使用ip作为实例名字前缀，而不是计算机名,用于客户端配置
+    #instance-id: ${spring.cloud.client.ip-address}:${server.port} # 将Instance ID设置成IP:端口的形式,用于客户端配置
+    #data-center-info:    # 指定数据中心
+    #environment:   # 指定eureka环境
+    #ip-address: 172.31.1.227   # 必须是本机ip
+  client:
+    register-with-eureka: false # 是否注册到eureka
+    fetch-registry: false # 是否拉取其他eureka上的数据(如：注册列表)
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    enable-self-preservation: false  # 是否开启自我保护
+    #当server在15分钟内(900s)，比值低于percent，即少了15%的微服务心跳，server会进入自我保护状态，Self-Preservation。
+    #在此状态下，server不会删除注册信息，这就有可能导致在调用微服务时，实际上服务并不存在。
+    #Renews threshold：server期望在每分钟中收到的心跳次数
+    #Renews (last min)：上一分钟内收到的心跳次数2*n,n代表客户端数量，包括其它eureka
+    #renewal-percent-threshold: 0.85 #默认值0.85
+    #eviction-interval-timer-in-ms:  # 清理无效的服务的时间间隔（单位毫秒，默认是60*1000）
+
+spring:
+  application:
+    name: springcloud-a01

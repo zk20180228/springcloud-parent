@@ -1,0 +1,19 @@
+server:
+  port: 8010
+
+spring:
+  application:
+    name: springcloud-feign-hystrix-e
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+
+#Feign是自带断路器的，在D版本的Spring Cloud之后，它没有默认打开
+feign:
+  hystrix:
+    enabled: true
